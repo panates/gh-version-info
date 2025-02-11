@@ -32335,26 +32335,29 @@ const run = async () => {
     const releasedVersions = versions.filter(v => v.released);
     const last = versions[0];
     const previous = versions[1];
-    const first = versions[versions.length - 1];
-    const lastReleased = releasedVersions[0];
-    const previousReleased = releasedVersions[1];
-    const firstReleased = releasedVersions[releasedVersions.length - 1];
-    // console.log(`List of version tags are ${versions.join('\n  ')}`);
-    console.log(`Last version = ${JSON.stringify(last, null, 2)}`);
-    console.log(`Previous version = ${JSON.stringify(previous, null, 2)}`);
-    console.log(`First version = ${JSON.stringify(first, null, 2)}`);
-    console.log(`Last released = ${JSON.stringify(lastReleased, null, 2)}`);
-    console.log(`Previous released = ${JSON.stringify(previousReleased, null, 2)}`);
-    console.log(`First released ${JSON.stringify(firstReleased, null, 2)}`);
-    console.log(`List of all versions = ${JSON.stringify(versions, null, 2)}`);
-    core.setOutput('last', last);
-    core.setOutput('previous', previous);
-    core.setOutput('first', first);
-    core.setOutput('lastReleased', lastReleased);
-    core.setOutput('previousReleased', previousReleased);
-    core.setOutput('firstReleased', firstReleased);
-    core.setOutput('versions', versions);
-    core.setOutput('releasedVersions', releasedVersions);
+    const released = releasedVersions[0];
+    const output = {
+        lastVersion: last.name,
+        lastSha: last.commit,
+        prevVersion: previous.name,
+        prevSha: previous.commit,
+        releasedVersion: last.name,
+        releasedSha: last.commit,
+        last,
+        previous,
+        released,
+        versions,
+        releasedVersions,
+    };
+    for (const [k, v] of Object.entries(output)) {
+        core.setOutput(k, v);
+        if (Array.isArray(v))
+            console.log(`${k} = ${v.length} items`);
+        else if (typeof v === 'object')
+            console.log(`${k}: ${JSON.stringify(v, null, 2)}`);
+        else
+            console.log(`${k} = ${v}`);
+    }
 };
 run().catch(e => {
     console.error(e);
