@@ -32334,12 +32334,12 @@ const run = async () => {
     })
         .filter(t => !releasedOnly || t.released)
         .sort((x, y) => x.name.localeCompare(y.name));
-    const releases = releasesRequest.data;
     // console.log(`List of version tags are ${versions.join('\n  ')}`);
-    console.log(`List of version tags are ${JSON.stringify(tagsRequest.data, null, 2)}`);
-    console.log(`List of releases are ${JSON.stringify(releases, null, 2)}`);
-    // const nextVersionTag = getNextVersion(orderedTags[0]);
-    // console.log(`next version is ${nextVersionTag}`);
+    console.log(`Number of version tags = ${versions.length}`);
+    console.log(`Last version = ${JSON.stringify(versions[0], null, 2)}`);
+    console.log(`Previous version = ${JSON.stringify(versions[1], null, 2)}`);
+    console.log(`First version is ${JSON.stringify(versions[versions.length - 1], null, 2)}`);
+    console.log(`List of all versions = ${JSON.stringify(versions, null, 2)}`);
     core.setOutput('count', versions.length);
     core.setOutput('all', versions);
     core.setOutput('last', versions[0]);
