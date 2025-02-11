@@ -20,10 +20,13 @@ from commit tags and github releases.
 
 - *last*: Info object for last version found
 - *previous*: Info object for previous version found
-- *first*: Info object for first version found
-- *lastReleased*: Info object for last released version found
-- *previousReleased*: Info object for previous released version found
-- *firstReleased*: Info object for first released version found
+- *released*: Info object for last released version found
+- *lastVersion*: Last version tag name
+- *lastSha*: Last version sha
+- *prevVersion*: Previous version tag name
+- *prevSha*: Previous version sha
+- *releasedVersion*: Last released version tag name
+- *releasedSha*: Last released version sha
 - *versions*: Array of version info objects
 - *releasedVersions*: Array of released version info objects
 

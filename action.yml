@@ -8,21 +8,23 @@ inputs:
     default: ${{ github.token }}
 outputs:
   last:
-    description: Info object for last version found
+    description: Info object for last version
   previous:
-    description: Info object for previous version found
-  first:
-    description: Info object for first version found
-  lastReleased:
-    description: Info object for last released version found
-  previousReleased:
-    description: Info object for previous released version found
-  firstReleased:
-    description: Info object for first released version found
-  versions:
-    description: Array of info objects contains all versions
-  releasedVersions:
-    description: Array of info objects contains released versions
+    description: Info object for previous version
+  released:
+    description: Info object for last released version
+  lastVersion:
+    description: Last version tag name
+  lastSha:
+    description: Last version sha
+  prevVersion:
+    description: Previous version tag name
+  prevSha:
+    description: Previous version sha
+  releasedVersion:
+    description: Last released version tag name
+  releasedSha:
+    description: Last released version sha
 runs:
   using: 'node20'
   main: 'dist/index.js'
