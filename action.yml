@@ -6,14 +6,14 @@ inputs:
     description: 'GitHub Access Token'
     required: false
     default: ${{ github.token }}
-  working-directory:
-    description: 'Relative path under $GITHUB_WORKSPACE where the repository was checked out.'
+  released-only:
+    description: 'Returns only released versions'
     required: false
 outputs:
-  versions:
+  count:
+    description: Number of version info
+  items:
     description: JSON array with names of all version tags
-  releases:
-    description: JSON array with info of all releases
 runs:
   using: 'node20'
   main: 'dist/index.js'
