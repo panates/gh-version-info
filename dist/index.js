@@ -32344,7 +32344,7 @@ const run = async () => {
     core.setOutput('all', versions);
     core.setOutput('last', versions[0]);
     core.setOutput('previous', versions[1]);
-    core.setOutput('first', versions[versions.length - 1]);
+    core.setOutput('list', versions[versions.length - 1]);
     // core.setOutput('releases', releases);
     // core.setOutput('next', nextVersionTag);
 };

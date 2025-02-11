@@ -12,14 +12,14 @@ inputs:
 outputs:
   count:
     description: Number of version info
-  all:
-    description: JSON array with names of all version tags
+  list:
+    description: Array of version info objects
   last:
-    description: JSON array with names of last version tag
+    description: Info object for last version found
   previous:
-    description: JSON array with names of previous version tag
+    description: Info object for previous version found
   first:
-    description: JSON array with names of first version tag
+    description: Info object for first version found
 runs:
   using: 'node20'
   main: 'dist/index.js'
