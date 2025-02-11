@@ -45,7 +45,8 @@
     "check": "madge --circular src/**",
     "cover": "jest --runInBand --detectOpenHandles --coverage",
     "precitest": "rimraf coverage",
-    "citest": "jest --coverage --runInBand"
+    "citest": "jest --coverage --runInBand",
+    "prepare": "husky"
   },
   "main": "./dist/index.js",
   "contributors": [
