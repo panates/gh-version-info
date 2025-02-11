@@ -41,7 +41,7 @@ jobs:
 
     # run only if 'backend' files were changed
     - name: backend tests
-      if: steps.filter.outputs.last == 'v1.0.0'
+      if: steps.filter.outputs.last.name == 'v1.0.0'
       run: ...    
 ```
 
