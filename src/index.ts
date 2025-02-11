@@ -40,7 +40,8 @@ const run = async () => {
       }
       return o;
     })
-    .sort((x, y) => y.name.localeCompare(x.name));
+    .sort((x, y) => x.name.localeCompare(y.name))
+    .reverse();
   const releasedVersions = versions.filter(v => v.released);
 
   const last = versions[0];
@@ -63,7 +64,8 @@ const run = async () => {
 
   for (const [k, v] of Object.entries(output)) {
     core.setOutput(k, v);
-    if (Array.isArray(v)) console.log(`${k} = ${v.length} items`);
+    if (Array.isArray(v))
+      console.log(`${k} = ${v.map(x => x.name).join(', ')}`);
     else if (typeof v === 'object')
       console.log(`${k}: ${JSON.stringify(v, null, 2)}`);
     else console.log(`${k} = ${v}`);

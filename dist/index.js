@@ -32330,8 +32330,7 @@ const run = async () => {
         }
         return o;
     })
-        // .filter(t => !releasedOnly || t.released)
-        .sort((x, y) => x.name.localeCompare(y.name));
+        .sort((x, y) => y.name.localeCompare(x.name));
     const releasedVersions = versions.filter(v => v.released);
     const last = versions[0];
     const previous = versions[1];
