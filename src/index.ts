@@ -8,10 +8,6 @@ const octokit = github.getOctokit(token);
 const VERSION_PATTERN = /[Vv](\d)+\.(\d)+\.(\d)+/;
 
 const run = async () => {
-  const releasedOnly =
-    (core.getInput('released-only', { trimWhitespace: true }) || 'true') ===
-    'true';
-
   const tagsRequest = await octokit.rest.repos.listTags({
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
@@ -44,25 +40,36 @@ const run = async () => {
       }
       return o;
     })
-    .filter(t => !releasedOnly || t.released)
+    // .filter(t => !releasedOnly || t.released)
     .sort((x, y) => x.name.localeCompare(y.name));
+  const releasedVersions = versions.filter(v => v.released);
+
+  const last = versions[0];
+  const previous = versions[1];
+  const first = versions[versions.length - 1];
+  const lastReleased = releasedVersions[0];
+  const previousReleased = releasedVersions[1];
+  const firstReleased = releasedVersions[releasedVersions.length - 1];
 
   // console.log(`List of version tags are ${versions.join('\n  ')}`);
-  console.log(`Number of version tags = ${versions.length}`);
-  console.log(`Last version = ${JSON.stringify(versions[0], null, 2)}`);
-  console.log(`Previous version = ${JSON.stringify(versions[1], null, 2)}`);
+  console.log(`Last version = ${JSON.stringify(last, null, 2)}`);
+  console.log(`Previous version = ${JSON.stringify(previous, null, 2)}`);
+  console.log(`First version = ${JSON.stringify(first, null, 2)}`);
+  console.log(`Last released = ${JSON.stringify(lastReleased, null, 2)}`);
   console.log(
-    `First version is ${JSON.stringify(versions[versions.length - 1], null, 2)}`,
+    `Previous released = ${JSON.stringify(previousReleased, null, 2)}`,
   );
+  console.log(`First released ${JSON.stringify(firstReleased, null, 2)}`);
   console.log(`List of all versions = ${JSON.stringify(versions, null, 2)}`);
 
-  core.setOutput('count', versions.length);
-  core.setOutput('all', versions);
-  core.setOutput('last', versions[0]);
-  core.setOutput('previous', versions[1]);
-  core.setOutput('list', versions[versions.length - 1]);
-  // core.setOutput('releases', releases);
-  // core.setOutput('next', nextVersionTag);
+  core.setOutput('last', last);
+  core.setOutput('previous', previous);
+  core.setOutput('first', first);
+  core.setOutput('lastReleased', lastReleased);
+  core.setOutput('previousReleased', previousReleased);
+  core.setOutput('firstReleased', firstReleased);
+  core.setOutput('versions', versions);
+  core.setOutput('releasedVersions', releasedVersions);
 };
 
 run().catch(e => {

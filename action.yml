@@ -6,20 +6,23 @@ inputs:
     description: 'GitHub Access Token'
     required: false
     default: ${{ github.token }}
-  released-only:
-    description: 'Returns only released versions'
-    required: false
 outputs:
-  count:
-    description: Number of version info
-  list:
-    description: Array of version info objects
   last:
     description: Info object for last version found
   previous:
     description: Info object for previous version found
   first:
     description: Info object for first version found
+  lastReleased:
+    description: Info object for last released version found
+  previousReleased:
+    description: Info object for previous released version found
+  firstReleased:
+    description: Info object for first released version found
+  versions:
+    description: Array of info objects contains all versions
+  releasedVersions:
+    description: Array of info objects contains released versions
 runs:
   using: 'node20'
   main: 'dist/index.js'
