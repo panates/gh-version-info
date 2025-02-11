@@ -18,7 +18,10 @@ const run = async () => {
     .map(t => t.name)
     .sort((x, y) => x.localeCompare(y));
 
-  console.log(`List of version tags are ${versions.join('\n  ')}`);
+  // console.log(`List of version tags are ${versions.join('\n  ')}`);
+  console.log(
+    `List of version tags are ${JSON.stringify(tagsRequest.data, null, 2)}`,
+  );
 
   const releasesRequest = await octokit.rest.repos.listReleases({
     owner: github.context.repo.owner,
