@@ -1,0 +1,32 @@
+name: "Build"
+
+on:
+  push:
+    paths: [ 'src/**', 'package.json', '**/*.yml' ]
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: |
+          npm install
+          npm run check
+          npm run lint
+          npm run build
+
+  self-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./
+        id: info
+      - name: info-test
+        if: steps.info.outputs.versions == null
+        run: exit 1

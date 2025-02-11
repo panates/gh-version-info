@@ -1,0 +1,22 @@
+name: 'Version Info'
+description: 'Retrieve version tags and releases info from your repository.'
+author: 'Eray Hanoglu <e.hanoglu@panates.com>'
+inputs:
+  token:
+    description: 'GitHub Access Token'
+    required: false
+    default: ${{ github.token }}
+  working-directory:
+    description: 'Relative path under $GITHUB_WORKSPACE where the repository was checked out.'
+    required: false
+outputs:
+  versions:
+    description: JSON array with names of all version tags
+  releases:
+    description: JSON array with info of all releases
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
+branding:
+  color: yellow
+  icon: tag

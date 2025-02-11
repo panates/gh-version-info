@@ -1,0 +1,66 @@
+{
+  "name": "gh-version-info",
+  "description": "Github action to retrieve version information",
+  "version": "1.0.0",
+  "author": "Panates",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "6.0.0",
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@panates/eslint-config": "^2.0.3",
+    "@panates/eslint-config-ts": "^2.0.3",
+    "@panates/tsconfig": "^2.0.3",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.10.7",
+    "@vercel/ncc": "^0.38.3",
+    "globals": "^15.14.0",
+    "jest": "^29.7.0",
+    "madge": "^8.0.0",
+    "prettier": "^3.4.2",
+    "rimraf": "^6.0.1",
+    "ts-loader": "^9.5.2",
+    "ts-cleanup": "^1.3.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^11.0.0-beta.1",
+    "typescript": "^5.7.3"
+  },
+  "scripts": {
+    "compile": "tsc -b tsconfig-build.json --noEmit",
+    "clean": "npm run clean:src && npm run clean:dist",
+    "clean:dist": "rimraf dist coverage",
+    "clean:src": "ts-cleanup -s src --all | ts-cleanup -s test",
+    "prebuild": "npm run clean:dist && npm run lint",
+    "build": "tsc -b tsconfig-build.json && ncc build",
+    "test": "jest",
+    "lint": "eslint . --max-warnings=0",
+    "lint:fix": "eslint . --max-warnings=0 --fix",
+    "format": "prettier . --write --log-level=warn",
+    "precover": "rimraf coverage",
+    "check": "madge --circular src/**",
+    "cover": "jest --runInBand --detectOpenHandles --coverage",
+    "precitest": "rimraf coverage",
+    "citest": "jest --coverage --runInBand"
+  },
+  "main": "./dist/index.js",
+  "contributors": [
+    "Eray Hanoglu <e.hanoglu@panates.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/panates/gh-version-info.git"
+  },
+  "engines": {
+    "node": ">=16.0"
+  },
+  "keywords": [
+    "github",
+    "actions",
+    "version",
+    "tag"
+  ]
+}
