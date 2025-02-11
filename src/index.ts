@@ -2,13 +2,15 @@ import * as core from '@actions/core';
 import * as github from '@actions/github';
 // import http from '@actions/http-client';
 
-const token = core.getInput('token') || process.env.GITHUB_TOKEN || '';
+const token = core.getInput('token', { trimWhitespace: true, required: true });
 
 const octokit = github.getOctokit(token);
 const VERSION_PATTERN = /[Vv](\d)+\.(\d)+\.(\d)+/;
 
 const run = async () => {
-  const releasedOnly = core.getInput('released-only') === 'true';
+  const releasedOnly =
+    (core.getInput('released-only', { trimWhitespace: true }) || 'true') ===
+    'true';
 
   const tagsRequest = await octokit.rest.repos.listTags({
     owner: github.context.repo.owner,
@@ -57,7 +59,10 @@ const run = async () => {
   // console.log(`next version is ${nextVersionTag}`);
 
   core.setOutput('count', versions.length);
-  core.setOutput('items', versions);
+  core.setOutput('all', versions);
+  core.setOutput('last', versions[0]);
+  core.setOutput('previous', versions[1]);
+  core.setOutput('first', versions[versions.length - 1]);
   // core.setOutput('releases', releases);
   // core.setOutput('next', nextVersionTag);
 };
