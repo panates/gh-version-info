@@ -8,8 +8,6 @@ const octokit = github.getOctokit(token);
 const VERSION_PATTERN = /[Vv](\d)+\.(\d)+\.(\d)+/;
 
 const run = async () => {
-  console.log(github.context);
-
   const tagsRequest = await octokit.rest.repos.listTags({
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
@@ -20,7 +18,7 @@ const run = async () => {
     .map(t => t.name)
     .sort((x, y) => x.localeCompare(y));
 
-  console.log(`List of version tags are ${versions}`);
+  console.log(`List of version tags are ${versions.join('\n  ')}`);
 
   const releasesRequest = await octokit.rest.repos.listReleases({
     owner: github.context.repo.owner,
@@ -29,7 +27,7 @@ const run = async () => {
 
   const releases = releasesRequest.data;
 
-  console.log(`List of releases are ${releases}`);
+  console.log(`List of releases are ${JSON.stringify(releases, null, 2)}`);
 
   // const nextVersionTag = getNextVersion(orderedTags[0]);
   // console.log(`next version is ${nextVersionTag}`);
