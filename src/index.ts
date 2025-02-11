@@ -55,6 +55,7 @@ const run = async () => {
     prevSha: previous.commit,
     releasedVersion: last.name,
     releasedSha: last.commit,
+    needRelease: last.commit !== released.commit,
     last,
     previous,
     released,

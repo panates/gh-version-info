@@ -7,12 +7,6 @@ inputs:
     required: false
     default: ${{ github.token }}
 outputs:
-  last:
-    description: Info object for last version
-  previous:
-    description: Info object for previous version
-  released:
-    description: Info object for last released version
   lastVersion:
     description: Last version tag name
   lastSha:
@@ -25,6 +19,15 @@ outputs:
     description: Last released version tag name
   releasedSha:
     description: Last released version sha
+  needRelease:
+    description: true if last sha differs from released sha, false otherwise
+  last:
+    description: Info object for last version
+  previous:
+    description: Info object for previous version
+  released:
+    description: Info object for last released version
+
 runs:
   using: 'node20'
   main: 'dist/index.js'

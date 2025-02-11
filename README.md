@@ -18,9 +18,6 @@ from commit tags and github releases.
 
 ## Outputs
 
-- *last*: Info object for last version found
-- *previous*: Info object for previous version found
-- *released*: Info object for last released version found
 - *lastVersion*: Last version tag name
 - *lastSha*: Last version sha
 - *prevVersion*: Previous version tag name
@@ -29,6 +26,10 @@ from commit tags and github releases.
 - *releasedSha*: Last released version sha
 - *versions*: Array of version info objects
 - *releasedVersions*: Array of released version info objects
+- *last*: Info object for last version found
+- *needRelease*: `true` if last sha differs from released sha, `false` otherwise 
+- *previous*: Info object for previous version found
+- *released*: Info object for last released version found
 
 ## Examples
 
