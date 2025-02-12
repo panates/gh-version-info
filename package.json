@@ -1,7 +1,7 @@
 {
   "name": "gh-version-info",
   "description": "Github action to retrieve version information",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "author": "Panates",
   "license": "MIT",
   "private": true,
