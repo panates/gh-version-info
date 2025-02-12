@@ -32309,6 +32309,8 @@ const run = async () => {
     const versions = tagsRequest.data
         .filter(t => VERSION_PATTERN.test(t.name))
         .map(t => {
+        if (!t)
+            return null;
         const o = {
             name: t.name,
             commit: t.commit.sha,
@@ -32329,6 +32331,7 @@ const run = async () => {
         }
         return o;
     })
+        .filter(x => x)
         .sort((x, y) => x.name.localeCompare(y.name))
         .reverse();
     const releasedVersions = versions.filter(v => v.released);
