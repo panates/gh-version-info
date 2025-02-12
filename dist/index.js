@@ -32294,7 +32294,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const tslib_1 = __nccwpck_require__(1860);
 const core = tslib_1.__importStar(__nccwpck_require__(7484));
 const github = tslib_1.__importStar(__nccwpck_require__(3228));
-// import http from '@actions/http-client';
 const token = core.getInput('token', { trimWhitespace: true, required: true });
 const octokit = github.getOctokit(token);
 const VERSION_PATTERN = /[Vv](\d)+\.(\d)+\.(\d)+/;
@@ -32337,13 +32336,13 @@ const run = async () => {
     const previous = versions[1];
     const released = releasedVersions[0];
     const output = {
-        lastVersion: last.name,
-        lastSha: last.commit,
-        prevVersion: previous.name,
-        prevSha: previous.commit,
-        releasedVersion: last.name,
-        releasedSha: last.commit,
-        needRelease: last.commit !== released.commit,
+        lastVersion: last?.name,
+        lastSha: last?.commit,
+        prevVersion: previous?.name,
+        prevSha: previous?.commit,
+        releasedVersion: released?.name,
+        releasedSha: released?.commit,
+        needRelease: last?.commit !== released.commit,
         last,
         previous,
         released,
