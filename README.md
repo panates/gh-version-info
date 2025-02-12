@@ -38,13 +38,23 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: panates/gh-version-info@main
+      - uses: panates/gh-version-info@v2
         id: version_info
 
       # run only if 'backend' files were changed
-      - name: backend tests
-        if: steps.filter.outputs.last.name == 'v1.0.0'
-        run: ...    
+      - name: create release
+        if: ${{ steps.filter.outputs.needRelease == 'true' }}
+        run: ...
+
+      # run only if latest version starts with v1
+      - name: v1 tests
+        if: ${{ startsWith(steps.filter.outputs.lastVersion, 'v1') }}
+        run: ...
+
+      # run only if released version starts with v1
+      - name: v1 tests
+        if: ${{ startsWith(steps.filter.outputs.releasedVersion, 'v1') }}
+        run: ...
 ```
 
 ## License
