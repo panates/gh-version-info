@@ -1,6 +1,5 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-// import http from '@actions/http-client';
 
 const token = core.getInput('token', { trimWhitespace: true, required: true });
 
@@ -49,13 +48,13 @@ const run = async () => {
   const released = releasedVersions[0];
 
   const output = {
-    lastVersion: last.name,
-    lastSha: last.commit,
-    prevVersion: previous.name,
-    prevSha: previous.commit,
-    releasedVersion: last.name,
-    releasedSha: last.commit,
-    needRelease: last.commit !== released.commit,
+    lastVersion: last?.name,
+    lastSha: last?.commit,
+    prevVersion: previous?.name,
+    prevSha: previous?.commit,
+    releasedVersion: released?.name,
+    releasedSha: released?.commit,
+    needRelease: last?.commit !== released.commit,
     last,
     previous,
     released,
