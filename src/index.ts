@@ -1,5 +1,6 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
+import { compareVersions } from 'compare-versions';
 
 const token = core.getInput('token', { trimWhitespace: true, required: true });
 
@@ -41,8 +42,7 @@ const run = async () => {
       return o;
     })
     .filter(x => x)
-    .sort((x, y) => x.name.localeCompare(y.name))
-    .reverse();
+    .sort((x, y) => compareVersions(y.name, x.name));
   const releasedVersions = versions.filter(v => v.released);
 
   const last = versions[0];
