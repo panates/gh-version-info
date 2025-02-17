@@ -38,6 +38,7 @@ const run = async () => {
           published_at: release.published_at,
           notes: release.body,
         };
+        console.log('Release:', release);
       }
       return o;
     })
