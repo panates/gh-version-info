@@ -32569,10 +32569,10 @@ const run = async () => {
         }
         return r;
     });
-    versions.forEach(x => console.log(x));
     const releasedVersions = versions.filter(v => v.released);
     const last = versions[0];
-    const previous = versions[1];
+    const previous = last &&
+        versions.find(x => extractVersion(x.name) !== extractVersion(last.name));
     const released = releasedVersions[0];
     const output = {
         lastVersion: last?.name,
