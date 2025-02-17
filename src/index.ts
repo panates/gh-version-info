@@ -5,7 +5,7 @@ import { compareVersions } from 'compare-versions';
 const token = core.getInput('token', { trimWhitespace: true, required: true });
 
 const octokit = github.getOctokit(token);
-const VERSION_PATTERN = /^[Vv](\d+\.\d+\.\d+)$/;
+const VERSION_PATTERN = /(\d+\.\d+\.\d+)/;
 
 const run = async () => {
   const tagsRequest = await octokit.rest.repos.listTags({
