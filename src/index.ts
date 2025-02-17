@@ -43,12 +43,15 @@ const run = async () => {
     })
     .filter(x => x)
     .sort((x, y) => {
-      if (y.released && !x.released) return 1;
-      if (x.released && !y.released) return -1;
       const v1 = extractVersion(y.name);
       const v2 = extractVersion(x.name);
       if (!(v1 && v2)) return -1;
-      return compareVersions(v1, v2);
+      const r = compareVersions(v1, v2);
+      if (r === 0) {
+        if (y.released && !x.released) return 1;
+        if (x.released && !y.released) return -1;
+      }
+      return r;
     });
   versions.forEach(x => console.log(x));
   const releasedVersions = versions.filter(v => v.released);
