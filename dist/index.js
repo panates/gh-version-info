@@ -32529,6 +32529,7 @@ const run = async () => {
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
     });
+    console.log(tagsRequest.data);
     const versions = tagsRequest.data
         .filter(t => VERSION_PATTERN.test(t.name))
         .map(t => {
@@ -32554,8 +32555,9 @@ const run = async () => {
         }
         return o;
     })
-        .filter(x => x)
-        .sort((x, y) => (0, compare_versions_1.compareVersions)(y.name, x.name));
+        .filter(x => x);
+    console.log(versions);
+    versions.sort((x, y) => (0, compare_versions_1.compareVersions)(y.name, x.name));
     const releasedVersions = versions.filter(v => v.released);
     const last = versions[0];
     const previous = versions[1];
