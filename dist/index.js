@@ -32519,7 +32519,7 @@ const github = tslib_1.__importStar(__nccwpck_require__(3228));
 const compare_versions_1 = __nccwpck_require__(2026);
 const token = core.getInput('token', { trimWhitespace: true, required: true });
 const octokit = github.getOctokit(token);
-const VERSION_PATTERN = /^[Vv](\d+\.\d+\.\d+)$/;
+const VERSION_PATTERN = /(\d+\.\d+\.\d+)/;
 const run = async () => {
     const tagsRequest = await octokit.rest.repos.listTags({
         owner: github.context.repo.owner,
