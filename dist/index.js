@@ -32519,7 +32519,7 @@ const github = tslib_1.__importStar(__nccwpck_require__(3228));
 const compare_versions_1 = __nccwpck_require__(2026);
 const token = core.getInput('token', { trimWhitespace: true, required: true });
 const octokit = github.getOctokit(token);
-const VERSION_PATTERN = /(\d+\.\d+\.\d+)/;
+const VERSION_PATTERN = /^[Vv](\d+\.\d+\.\d+)$/;
 const run = async () => {
     const tagsRequest = await octokit.rest.repos.listTags({
         owner: github.context.repo.owner,
@@ -32534,7 +32534,7 @@ const run = async () => {
         .map(t => {
         if (!t)
             return null;
-        console.log(t.name);
+        console.log(t);
         const o = {
             name: t.name,
             commit: t.commit.sha,
@@ -32557,11 +32557,11 @@ const run = async () => {
     })
         .filter(x => x)
         .sort((x, y) => {
-        const m1 = VERSION_PATTERN.exec(y.name);
-        const m2 = VERSION_PATTERN.exec(x.name);
-        if (!(m1 && m2))
+        const v1 = extractVersion(y.name);
+        const v2 = extractVersion(x.name);
+        if (!(v1 && v2))
             return -1;
-        return (0, compare_versions_1.compareVersions)(m1[1], m2[1]);
+        return (0, compare_versions_1.compareVersions)(v1, v2);
     });
     const releasedVersions = versions.filter(v => v.released);
     const last = versions[0];
@@ -32591,6 +32591,10 @@ const run = async () => {
             console.log(`${k} = ${v}`);
     }
 };
+function extractVersion(s) {
+    const m = VERSION_PATTERN.exec(s);
+    return m ? m[1] : undefined;
+}
 run().catch(e => {
     console.error(e);
     process.exit(1);

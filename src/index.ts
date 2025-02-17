@@ -5,7 +5,7 @@ import { compareVersions } from 'compare-versions';
 const token = core.getInput('token', { trimWhitespace: true, required: true });
 
 const octokit = github.getOctokit(token);
-const VERSION_PATTERN = /(\d+\.\d+\.\d+)/;
+const VERSION_PATTERN = /^[Vv](\d+\.\d+\.\d+)$/;
 
 const run = async () => {
   const tagsRequest = await octokit.rest.repos.listTags({
@@ -21,7 +21,7 @@ const run = async () => {
     .filter(t => VERSION_PATTERN.test(t.name))
     .map(t => {
       if (!t) return null;
-      console.log(t.name);
+      console.log(t);
       const o: any = {
         name: t.name,
         commit: t.commit.sha,
@@ -44,10 +44,10 @@ const run = async () => {
     })
     .filter(x => x)
     .sort((x, y) => {
-      const m1 = VERSION_PATTERN.exec(y.name);
-      const m2 = VERSION_PATTERN.exec(x.name);
-      if (!(m1 && m2)) return -1;
-      return compareVersions(m1[1], m2[1]);
+      const v1 = extractVersion(y.name);
+      const v2 = extractVersion(x.name);
+      if (!(v1 && v2)) return -1;
+      return compareVersions(v1, v2);
     });
   const releasedVersions = versions.filter(v => v.released);
 
@@ -79,6 +79,11 @@ const run = async () => {
     else console.log(`${k} = ${v}`);
   }
 };
+
+function extractVersion(s: string) {
+  const m = VERSION_PATTERN.exec(s);
+  return m ? m[1] : undefined;
+}
 
 run().catch(e => {
   console.error(e);
