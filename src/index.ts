@@ -5,7 +5,7 @@ import { compareVersions } from 'compare-versions';
 const token = core.getInput('token', { trimWhitespace: true, required: true });
 
 const octokit = github.getOctokit(token);
-const VERSION_PATTERN = /[Vv](\d)+\.(\d)+\.(\d)+/;
+const VERSION_PATTERN = /(\d+\.\d+\.\d+)/;
 
 const run = async () => {
   const tagsRequest = await octokit.rest.repos.listTags({
@@ -17,12 +17,11 @@ const run = async () => {
     repo: github.context.repo.repo,
   });
 
-  console.log(tagsRequest.data);
-
   const versions = tagsRequest.data
     .filter(t => VERSION_PATTERN.test(t.name))
     .map(t => {
       if (!t) return null;
+      console.log(t.name);
       const o: any = {
         name: t.name,
         commit: t.commit.sha,
@@ -43,9 +42,13 @@ const run = async () => {
       }
       return o;
     })
-    .filter(x => x);
-  console.log(versions);
-  versions.sort((x, y) => compareVersions(y.name, x.name));
+    .filter(x => x)
+    .sort((x, y) => {
+      const m1 = VERSION_PATTERN.exec(y.name);
+      const m2 = VERSION_PATTERN.exec(x.name);
+      if (!(m1 && m2)) return -1;
+      return compareVersions(m1[1], m2[1]);
+    });
   const releasedVersions = versions.filter(v => v.released);
 
   const last = versions[0];
