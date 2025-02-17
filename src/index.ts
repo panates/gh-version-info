@@ -21,7 +21,6 @@ const run = async () => {
     .filter(t => VERSION_PATTERN.test(t.name))
     .map(t => {
       if (!t) return null;
-      console.log(t);
       const o: any = {
         name: t.name,
         commit: t.commit.sha,
@@ -44,8 +43,8 @@ const run = async () => {
     })
     .filter(x => x)
     .sort((x, y) => {
-      if (y.released && !x.released) return -1;
-      if (x.released && !y.released) return 1;
+      if (y.released && !x.released) return 1;
+      if (x.released && !y.released) return -1;
       const v1 = extractVersion(y.name);
       const v2 = extractVersion(x.name);
       if (!(v1 && v2)) return -1;
